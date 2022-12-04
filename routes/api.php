@@ -22,4 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+<<<<<<< HEAD
 //1234567
+=======
+//firas
+>>>>>>> 7830c84ee54b270b81ab78a859b0ea1c17bfe03a
