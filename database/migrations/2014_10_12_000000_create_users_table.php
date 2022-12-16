@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is-expert')->default(false);
-            $table->int('cash')->default(1000);
+            $table->integer('cash')->default(1000);
             $table->rememberToken();
             $table->timestamps();
           

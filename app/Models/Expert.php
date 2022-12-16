@@ -19,5 +19,5 @@ class Expert extends Model
     {
         $this->hasOne(Star::class,'expert_id');
     }
+    
 }
-
