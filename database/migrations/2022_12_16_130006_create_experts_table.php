@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('tel');
-            $table->string('image');
-            $table->integer('price');
+            $table->string('image')->nullable();
+            $table->integer('price')->nullable();
             $table->timestamps();
         });
     }

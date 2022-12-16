@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('experts-categories', function (Blueprint $table) {
+        Schema::create('experiences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('categories-id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('expert_id')->constrained('experts')->cascadeOnDelete();
+            $table->string('experience');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('experiences');
     }
 };

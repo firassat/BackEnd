@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('expert_id')->constrained('experts')->cascadeOnDelete();
-            $table->integer('one-star')->default(0);
-            $table->integer('two-star')->default(0);
-            $table->integer('three-star')->default(0);
-            $table->integer('four-star')->default(0);
-            $table->integer('five-star')->default(0);
+            $table->integer('one_star')->default(0);
+            $table->integer('two_star')->default(0);
+            $table->integer('three_star')->default(0);
+            $table->integer('four_star')->default(0);
+            $table->integer('five_star')->default(0);
             $table->timestamps();
         });
     }

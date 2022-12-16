@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_expert',
     ];
 
     /**
@@ -44,15 +45,18 @@ class User extends Authenticatable
 
     Public function expert()
     {
-        return $this->hasOne(Expert::class, 'expert_id');
+        return $this->hasOne(Expert::class, 'experts_id');
     }
     public function favorite()
     {
-        return $this->hasMany(Favorite::class,'user_id');
+        return $this->hasMany(Favorite::class,'users_id');
     }
     public function star()
     {
-        return $this->hasMany(Star::class,'user_id');
+        return $this->hasMany(Star::class,'users_id');
     }
-
+    public function BookedTime()
+    {
+        return $this->hasMany(BookedTime::class,'users_id');
+    }
 }
