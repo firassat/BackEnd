@@ -9,15 +9,18 @@ class Expert extends Model
 {
     use HasFactory;
     public function user(){
-        $this->belongsTo(User::class);
+        return  $this->belongsTo(User::class);
     }
     public function favorite()
     {
-        $this->hasMany(Favorite::class,'expert_id');
+        return $this->hasMany(Favorite::class,'expert_id');
     }
     public function star()
     {
-        $this->hasOne(Star::class,'expert_id');
+        return $this->hasOne(Star::class,'expert_id');
     }
-    
+    public function categories()
+    {
+        return $this->belongsToMany(Categories::class, 'experts-categories');
+    }
 }

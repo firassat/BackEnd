@@ -44,15 +44,15 @@ class User extends Authenticatable
 
     Public function expert()
     {
-        $this->hasOne(Expert::class, 'expert_id');
+        return $this->hasOne(Expert::class, 'expert_id');
     }
     public function favorite()
     {
-        $this->hasMany(Favorite::class,'user_id');
+        return $this->hasMany(Favorite::class,'user_id');
     }
     public function star()
     {
-        $this->hasMany(Star::class,'user_id');
+        return $this->hasMany(Star::class,'user_id');
     }
 
 }
