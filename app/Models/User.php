@@ -41,4 +41,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    Public function expert()
+    {
+        $this->hasOne(Expert::class, 'expert_id');
+    }
+    public function favorite()
+    {
+        $this->hasMany(Favorite::class,'user_id');
+    }
+    public function star()
+    {
+        $this->hasMany(Star::class,'user_id');
+    }
+
 }
