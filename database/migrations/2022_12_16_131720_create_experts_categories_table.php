@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('experts_categories', function (Blueprint $table) {
             $table->id();
-            //$table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->boolean('is_expert')->default(false);
-            $table->integer('cash')->default(1000);
-            $table->rememberToken();
+            $table->foreignId('categories_id')->constrained('categories');
+            $table->foreignId('experts_id')->constrained('experts');
             $table->timestamps();
-
         });
     }
 
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        //
     }
 };

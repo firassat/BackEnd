@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Expert;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -21,11 +22,9 @@ class AuthController extends Controller
             //Validated
             $validateUser = Validator::make($request->all(),
             [
-                'name' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required'
             ]);
-
             if($validateUser->fails()){
                 return response()->json([
                     'status' => false,
@@ -33,13 +32,20 @@ class AuthController extends Controller
                     'errors' => $validateUser->errors()
                 ], 401);
             }
-
             $user = User::create([
-                'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'is_expert'=>$request->is_expert,
             ]);
 
+            if($request->is_expert == 1){
+                Expert::create([
+                    'users_id'=>$user->id,
+                    'name' => $request->name,
+                    'address' => $request->address,
+                    'tel' => $request->tel
+                ]);
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
