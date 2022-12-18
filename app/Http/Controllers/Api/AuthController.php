@@ -2,11 +2,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Expert;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -21,11 +23,9 @@ class AuthController extends Controller
             //Validated
             $validateUser = Validator::make($request->all(),
             [
-                'name' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required'
             ]);
-
             if($validateUser->fails()){
                 return response()->json([
                     'status' => false,
@@ -33,13 +33,20 @@ class AuthController extends Controller
                     'errors' => $validateUser->errors()
                 ], 401);
             }
-
             $user = User::create([
-                'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'is_expert'=>$request->is_expert,
             ]);
 
+            if($request->is_expert == 1){
+                Expert::create([
+                    'users_id'=>$user->id,
+                    'name' => $request->name,
+                    'address' => $request->address,
+                    'tel' => $request->tel
+                ]);
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
@@ -84,12 +91,22 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
-
+                if($user->is_expert==1){
+            return response()->json([
+                'status' => true,
+                'message' => 'Expert Logged In Successfully',
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ], 200);
+        }
+        else{
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
+        }
+        
+
 
         } catch (\Throwable $th) {
             return response()->json([
@@ -97,5 +114,15 @@ class AuthController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+    public function logout(Request $request)
+    {
+        $accessToken = $request->bearerToken();
+        $token = PersonalAccessToken::findToken($accessToken);
+        $token->delete();
+        return response()->json([
+            'status'=>'true',
+            'message'=>'user logged out'
+        ]);
     }
 }
