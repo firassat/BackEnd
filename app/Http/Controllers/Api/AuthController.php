@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -90,12 +91,22 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
-
+                if($user->is_expert==1){
+            return response()->json([
+                'status' => true,
+                'message' => 'Expert Logged In Successfully',
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ], 200);
+        }
+        else{
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
+        }
+        
+
 
         } catch (\Throwable $th) {
             return response()->json([
@@ -103,5 +114,15 @@ class AuthController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+    public function logout(Request $request)
+    {
+        $accessToken = $request->bearerToken();
+        $token = PersonalAccessToken::findToken($accessToken);
+        $token->delete();
+        return response()->json([
+            'status'=>'true',
+            'message'=>'user logged out'
+        ]);
     }
 }
