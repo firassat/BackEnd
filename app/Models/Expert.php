@@ -13,6 +13,7 @@ class Expert extends Model
         'address',
         'tel',
         'users_id',
+        'image'
     ];
 
     public function user(){
