@@ -108,6 +108,10 @@ class PersonController extends Controller
 
     public function updatePhoto(Request $request)
     {
+        $id=auth()->user()->id;
+        $x=Expert::all();
+        $info=$x->where('users_id',$id)->first();
+
         if($request->image !== null){
             $validator=Validator::make($request->all(), [
                 'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
