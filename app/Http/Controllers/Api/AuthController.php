@@ -91,24 +91,36 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
-                if($user->is_expert==1){
-            return response()->json([
-                'status' => true,
-                'isexpert'=>true,
-                'message' => 'Expert Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
+            if($user->is_expert==1){
+                $id=auth()->user()->id;
+                $x=Expert::all();
+                $info=$x->where('users_id',$id)->first();
+                if($info->image !== null){
+                return response()->json([
+                    'status' => true,
+                    'isexpert'=>true,
+                    'message' => 'Expert Logged In Successfully',
+                    'token' => $user->createToken("API TOKEN")->plainTextToken,
+                    'image'=>$info->image
+                 ], 200);
+                }
+                else{
+                    return response()->json([
+                        'status' => true,
+                        'isexpert'=>true,
+                        'message' => 'Expert Logged In Successfully',
+                        'token' => $user->createToken("API TOKEN")->plainTextToken
+                     ], 200);
+                }
         }
-        else{
-            return response()->json([
-                'status' => true,
-                'isexpert'=>false,
-                'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
-        }
-        
-
+            else{
+                return response()->json([
+                    'status' => true,
+                    'isexpert'=>false,
+                    'message' => 'User Logged In Successfully',
+                    'token' => $user->createToken("API TOKEN")->plainTextToken
+                ], 200);
+            }
 
         } catch (\Throwable $th) {
             return response()->json([

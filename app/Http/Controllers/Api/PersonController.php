@@ -126,6 +126,10 @@ class PersonController extends Controller
             $info->image = $url ;
         }
         $info->save();
+        return response()->json([
+            'status' => true,
+            'message' => 'Update Successfully',
+        ], 200);
     }
 
     /**
