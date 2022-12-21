@@ -98,7 +98,16 @@ class PersonController extends Controller
         $info->address = $request->address;
         $info->tel = $request->tel;
         $info->price = $request->price;
+        $info->save();
 
+        return response()->json([
+            'status' => true,
+            'message' => 'Update Successfully',
+        ], 200);
+    }
+
+    public function updatePhoto(Request $request)
+    {
         if($request->image !== null){
             $validator=Validator::make($request->all(), [
                 'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
@@ -113,11 +122,6 @@ class PersonController extends Controller
             $info->image = $url ;
         }
         $info->save();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Update Successfully',
-        ], 200);
     }
 
     /**
