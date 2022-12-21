@@ -94,6 +94,7 @@ class AuthController extends Controller
                 if($user->is_expert==1){
             return response()->json([
                 'status' => true,
+                'isexpert'=>true,
                 'message' => 'Expert Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
@@ -101,6 +102,7 @@ class AuthController extends Controller
         else{
             return response()->json([
                 'status' => true,
+                'isexpert'=>false,
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
