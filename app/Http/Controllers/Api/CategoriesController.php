@@ -64,7 +64,7 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+       //     
     }
 
     /**

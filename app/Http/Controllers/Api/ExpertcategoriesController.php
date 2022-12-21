@@ -40,8 +40,6 @@ class ExpertcategoriesController extends Controller
             'status' => true,
             'message' => 'added Successfully'
         ]);
-
-        
     }
 
     /**
@@ -61,9 +59,9 @@ class ExpertcategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+       //
     }
 
     /**
@@ -84,11 +82,11 @@ class ExpertcategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+   
+     public function update(Request $request, $id)
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -97,6 +95,12 @@ class ExpertcategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $x=Expertcategorie::find($id);
+        $x->delete();
+        return response()->json([
+            'status' => true,
+            'message' => 'deleted Successfully'
+        ]);
     }
+   
 }

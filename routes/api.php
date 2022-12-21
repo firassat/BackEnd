@@ -32,3 +32,4 @@ Route::get('show',[PersonController::class,'show'])->middleware('auth:sanctum');
 Route::post('update',[PersonController::class,'update'])->middleware('auth:sanctum');
 Route::post('addcategorie',[CategoriesController::class,'create']);
 Route::post('addexpertcategorie',[ExpertcategoriesController::class,'create'])->middleware('auth:sanctum');
+Route::get('deletecategorie/{id}',[ExpertcategoriesController::class,'destroy']);
