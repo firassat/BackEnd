@@ -23,10 +23,6 @@ class Expert extends Model
     {
         return $this->hasMany(Favorite::class,'expert_id');
     }
-    public function experiences()
-    {
-        return $this->hasMany(Experiences::class,'expert_id');
-    }
     public function AvailableTime()
     {
         return $this->hasMany(AvailableTime::class,'expert_id');
@@ -39,8 +35,9 @@ class Expert extends Model
     {
         return $this->hasOne(Star::class,'expert_id');
     }
-    public function categories()
+    public function categorie()
     {
-        return $this->belongsToMany(Categories::class, 'experts-categories');
+        return $this->belongsToMany(Categorie::class, 'expertcategories');
     }
 }
+
