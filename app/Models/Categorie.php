@@ -14,7 +14,7 @@ class Categorie extends Model
 
     public function expert()
     {
-        return $this->belongsToMany(Expert::class, 'expertcategories');
+        return $this->belongsToMany(Expert::class, 'expertcategories','categories_id','experts_id');
     }
 }
 

@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Star extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+       'user_id',
+       'expert_id',
+       'numberofstars'
+    ];
 public function user()
 {
     return $this->belongsTo(User::class);

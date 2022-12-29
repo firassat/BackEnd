@@ -24,7 +24,9 @@ class AuthController extends Controller
             $validateUser = Validator::make($request->all(),
             [
                 'email' => 'required|email|unique:users,email',
-                'password' => 'required'
+                'password' => 'required',
+                'is_expert'=>'required',
+                'name'=>'required' 
             ]);
             if($validateUser->fails()){
                 return response()->json([
@@ -35,6 +37,7 @@ class AuthController extends Controller
             }
             $user = User::create([
                 'email' => $request->email,
+                'name' => $request->name,
                 'password' => Hash::make($request->password),
                 'is_expert'=>$request->is_expert,
             ]);
@@ -42,7 +45,6 @@ class AuthController extends Controller
             if($request->is_expert == 1){
                 Expert::create([
                     'users_id'=>$user->id,
-                    'name' => $request->name,
                     'address' => $request->address,
                     'tel' => $request->tel
                 ]);
@@ -116,6 +118,8 @@ class AuthController extends Controller
             else{
                 return response()->json([
                     'status' => true,
+                    'name'=>$user->name,
+                    'cash'=>$user->cash,
                     'isexpert'=>false,
                     'message' => 'User Logged In Successfully',
                     'token' => $user->createToken("API TOKEN")->plainTextToken

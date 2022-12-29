@@ -37,7 +37,7 @@ class Expert extends Model
     }
     public function categorie()
     {
-        return $this->belongsToMany(Categorie::class, 'expertcategories');
+        return $this->belongsToMany(Categorie::class, 'expertcategories','experts_id','categories_id');
     }
 }
 

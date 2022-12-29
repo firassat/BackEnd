@@ -14,10 +14,10 @@ class Expertcategorie extends Model
         'experiance',
         'experiance_details'
     ];
-   /* public function categorie()
+    public function categorie()
     {
-        return $this->hasMany(Categorie::class,'categories_id');
-    }*/
+        return $this->belongsTo(Categorie::class,'categories_id');
+    }
     public function expert()
     {
         return  $this->belongsTo(Expert::class,'experts_id');

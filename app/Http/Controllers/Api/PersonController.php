@@ -52,8 +52,7 @@ class PersonController extends Controller
     public function show(Request $request)
     {
         $id=auth()->user()->id;
-        $x=Expert::all();
-        $info=$x->where('users_id',$id)->first();
+        $info=Expert::where('users_id',$id)->first();
         return $info;
 
 
