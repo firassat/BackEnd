@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     Public function expert()
     {
-        return $this->hasOne(Expert::class, 'experts_id');
+        return $this->hasOne(Expert::class, 'experts_id', 'users_id');
     }
     public function favorite()
     {

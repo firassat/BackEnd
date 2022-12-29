@@ -18,7 +18,7 @@ class ExpertcategoriesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    { 
+    {
       try{
         $name=$request->name;
         $x=User::where('name',$name)->first();
@@ -113,7 +113,7 @@ class ExpertcategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-   
+
      public function update(Request $request,$id)
     {
         $x=Expertcategorie::find($id);
@@ -147,5 +147,5 @@ class ExpertcategoriesController extends Controller
             'message' => 'deleted Successfully'
         ]);
     }
-   
+
 }

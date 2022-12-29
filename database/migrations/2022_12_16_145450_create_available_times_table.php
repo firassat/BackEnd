@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('expert_id')->constrained('experts')->cascadeOnDelete();
             $table->integer('day_id');
-            $table->dateTime('time_from');
-            $table->dateTime('time_to');
+            $table->Time('time_from');
+            $table->Time('time_to');
             $table->timestamps();
         });
     }

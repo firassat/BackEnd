@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('booked_times', function (Blueprint $table) {
-            $table->id();
+
             $table->foreignId('expert_id')->constrained('experts')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->integer('day_id');
-            $table->dateTime('time');
+            $table->Time('time');
             $table->timestamps();
         });
     }
