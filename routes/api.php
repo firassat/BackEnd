@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ExpertcategoriesController;
 use App\Http\Controllers\Api\FavoriteexpertController;
 use App\Http\Controllers\Api\StarController;
+use App\Http\Controllers\Api\TimeController;
 
 use App\Models\Expertcategorie;
 
@@ -45,3 +46,10 @@ Route::get('isinfavoritelist/{id}',[FavoriteexpertController::class,'show'])->mi
 Route::get('givestar/{id}/{num}',[StarController::class,'create'])->middleware('auth:sanctum');
 Route::get('showstars/{id}',[StarController::class,'show']);
 Route::post('search',[ExpertCategoriesController::class,'index']);
+Route::post('availableTimeCreate',[TimeController::class,'availableTimeCreate'])->middleware('auth:sanctum');
+Route::post('availableTimeUpdate',[TimeController::class,'availableTimeUpdate'])->middleware('auth:sanctum');
+Route::post('availableTimeDelete',[TimeController::class,'availableTimeDelete'])->middleware('auth:sanctum');
+Route::post('availableTimeForMe',[TimeController::class,'availableTimeForMe'])->middleware('auth:sanctum');
+Route::post('availableTimeForExpert',[TimeController::class,'availableTimeForExpert'])->middleware('auth:sanctum');
+Route::post('bookedTimeCreate',[TimeController::class,'bookedTimeCreate'])->middleware('auth:sanctum');
+Route::post('bookedTimeShow',[TimeController::class,'bookedTimeShow'])->middleware('auth:sanctum');
