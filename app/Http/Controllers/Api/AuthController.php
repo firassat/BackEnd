@@ -12,11 +12,6 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
-    /**
-     * Create User
-     * @param Request $request
-     * @return User|\Illuminate\Http\JsonResponse
-     */
     public function createUser(Request $request)
     {
         try {
@@ -51,23 +46,17 @@ class AuthController extends Controller
             }
             return response()->json([
                 'status' => true,
-                'message' => 'User Created Successfully',
+                'message' => trans('message.reS'),
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
-                'message' => $th->getMessage()
+                'message' => trans('message.reF')
             ], 500);
         }
     }
-
-    /**
-     * Login The User
-     * @param Request $request
-     * @return User|\Illuminate\Http\JsonResponse
-     */
     public function loginUser(Request $request)
     {
         try {
@@ -88,7 +77,7 @@ class AuthController extends Controller
             if(!Auth::attempt($request->only(['email', 'password']))){
                 return response()->json([
                     'status' => false,
-                    'message' => 'Email & Password does not match with our record.',
+                    'message' => trans('message.emailF'),
                 ], 401);
             }
 
@@ -101,7 +90,7 @@ class AuthController extends Controller
                 return response()->json([
                     'status' => true,
                     'isexpert'=>true,
-                    'message' => 'Expert Logged In Successfully',
+                    'message' => trans('message.logS'),
                     'token' => $user->createToken("API TOKEN")->plainTextToken,
                     'image'=>$info->image
                  ], 200);
@@ -110,7 +99,7 @@ class AuthController extends Controller
                     return response()->json([
                         'status' => true,
                         'isexpert'=>true,
-                        'message' => 'Expert Logged In Successfully',
+                        'message' => trans('message.logS'),
                         'token' => $user->createToken("API TOKEN")->plainTextToken
                      ], 200);
                 }
@@ -121,7 +110,7 @@ class AuthController extends Controller
                     'name'=>$user->name,
                     'cash'=>$user->cash,
                     'isexpert'=>false,
-                    'message' => 'User Logged In Successfully',
+                    'message' => trans('message.logS'),
                     'token' => $user->createToken("API TOKEN")->plainTextToken
                 ], 200);
             }
@@ -129,7 +118,7 @@ class AuthController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
-                'message' => $th->getMessage()
+                'message' => trans('message.logF')
             ], 200);
         }
     }
@@ -140,7 +129,7 @@ class AuthController extends Controller
         $token->delete();
         return response()->json([
             'status'=>'true',
-            'message'=>'user logged out'
+            'message'=>trans('message.logout')
         ]);
     }
 }

@@ -20,6 +20,13 @@ return [
     'timeNF' => 'Time Not Found',
     'timeDS' => 'Time Delete Successfully',
     'timeisAdd' => 'Time Is Added',
-    'userS' => 'User Created Successfully',
+    'reS' => 'User Created Successfully',
+    'reF' => 'register error',
+    'favoriteS' => 'Added to favorite list Successfully',
+    'favoriteD' => 'deleted from favorite list Successfully',
+    'emailF' => 'Email & Password does not match with our record.',
+    'logS' => 'Logged In Successfully',
+    'logF' => 'login error',
+    'logout' => 'logged out',
 
 ];
