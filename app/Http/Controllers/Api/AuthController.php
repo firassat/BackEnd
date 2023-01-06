@@ -15,7 +15,7 @@ class AuthController extends Controller
     /**
      * Create User
      * @param Request $request
-     * @return User
+     * @return User|\Illuminate\Http\JsonResponse
      */
     public function createUser(Request $request)
     {
@@ -26,14 +26,14 @@ class AuthController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required',
                 'is_expert'=>'required',
-                'name'=>'required' 
+                'name'=>'required'
             ]);
             if($validateUser->fails()){
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => trans('message.ve'),
                     'errors' => $validateUser->errors()
-                ], 401);
+                ], 200);
             }
             $user = User::create([
                 'email' => $request->email,
@@ -66,7 +66,7 @@ class AuthController extends Controller
     /**
      * Login The User
      * @param Request $request
-     * @return User
+     * @return User|\Illuminate\Http\JsonResponse
      */
     public function loginUser(Request $request)
     {
@@ -80,7 +80,7 @@ class AuthController extends Controller
             if($validateUser->fails()){
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => trans('message.ve'),
                     'errors' => $validateUser->errors()
                 ], 401);
             }
@@ -130,7 +130,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage()
-            ], 500);
+            ], 200);
         }
     }
     public function logout(Request $request)
