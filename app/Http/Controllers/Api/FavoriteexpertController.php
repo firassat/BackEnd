@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Favorite;
+use Exception;
 use Illuminate\Http\Request;
 
 class FavoriteexpertController extends Controller
@@ -53,20 +54,15 @@ class FavoriteexpertController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($idexpert,$iduser)
     {
-        $iduser=auth()->user()->id;
         $x=Favorite::where('user_id',$iduser);
-        if($x->where('expert_id',$id)->first())
+        if($x->where('expert_id',$idexpert)->first())
         {
-            return response()->json([
-               'is in favorite list'=>true
-            ]);
+           return true;
         }
         else{
-            return response()->json([
-                'is in favorite list'=>false
-             ]);
+            return false;
         }
     }
 
