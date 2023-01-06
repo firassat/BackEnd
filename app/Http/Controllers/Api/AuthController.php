@@ -54,7 +54,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => trans('message.reF')
-            ], 500);
+            ], 200);
         }
     }
     public function loginUser(Request $request)
@@ -71,14 +71,14 @@ class AuthController extends Controller
                     'status' => false,
                     'message' => trans('message.ve'),
                     'errors' => $validateUser->errors()
-                ], 401);
+                ], 200);
             }
 
             if(!Auth::attempt($request->only(['email', 'password']))){
                 return response()->json([
                     'status' => false,
                     'message' => trans('message.emailF'),
-                ], 401);
+                ], 200);
             }
 
             $user = User::where('email', $request->email)->first();
