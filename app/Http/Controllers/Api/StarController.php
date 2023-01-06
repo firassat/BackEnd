@@ -17,7 +17,7 @@ class StarController extends Controller
         if($x->where('expert_id',$id)->first())
         {
             return response()->json([
-                'massege'=>'the user have already give star for this expert'
+                'massege'=>trans('message.StarF')
             ]);
         }
         else{
@@ -29,7 +29,7 @@ class StarController extends Controller
             ]);
             return response()->json([
                 'status' => true,
-                'message' => 'Successfully'
+                'message' => trans('message.updateS')
             ]);
 
 

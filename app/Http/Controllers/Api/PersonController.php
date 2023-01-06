@@ -23,29 +23,12 @@ class PersonController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         $id=auth()->user()->id;
-        $x=Expert::all();
-        $info=$x->where('users_id',$id)->first();
+        $x=Expert::where('users_id',$id)->first();
+        $y=User::find($id);
 
         $validator = Validator::make($request->all(),[
            'name'=> 'required',
@@ -55,18 +38,18 @@ class PersonController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors(),400);
+            return response()->json($validator->errors(),200);
         }
 
-        $info->name = $request->name;
-        $info->address = $request->address;
-        $info->tel = $request->tel;
-        $info->price = $request->price;
-        $info->save();
+        $y->name = $request->name;
+        $x->address = $request->address;
+        $x->tel = $request->tel;
+        $x->price = $request->price;
+        $x->save();
 
         return response()->json([
             'status' => true,
-            'message' => 'Update Successfully',
+            'message' => trans('message.updateS'),
         ], 200);
     }
 
@@ -81,7 +64,7 @@ class PersonController extends Controller
                 'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
             ]);
             if($validator->fails()){
-                return response()->json($validator->errors(),400);
+                return response()->json($validator->errors(),200);
             }
             $file = $request->file('image');
             $filename = uniqid() . "_" . $file->getClientOriginalName();
@@ -92,18 +75,9 @@ class PersonController extends Controller
         $info->save();
         return response()->json([
             'status' => true,
-            'message' => 'Update Successfully',
+            'message' =>trans('message.updateS'),
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
 }

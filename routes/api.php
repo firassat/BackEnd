@@ -43,7 +43,6 @@ Route::group(['middleware' => ['changeLang','auth:sanctum'],'namespace'=>'Api'],
     Route::get('isinfavoritelist/{id}',[FavoriteexpertController::class,'show']);
     Route::get('givestar/{id}/{num}',[StarController::class,'create']);
     Route::get('showstars/{id}',[StarController::class,'show']);
-    Route::post('search',[ExpertCategoriesController::class,'index']);
     Route::post('availableTimeCreate',[TimeController::class,'availableTimeCreate']);
     Route::post('availableTimeUpdate',[TimeController::class,'availableTimeUpdate']);
     Route::post('availableTimeDelete',[TimeController::class,'availableTimeDelete']);
@@ -52,6 +51,6 @@ Route::group(['middleware' => ['changeLang','auth:sanctum'],'namespace'=>'Api'],
     Route::post('bookedTimeCreate',[TimeController::class,'bookedTimeCreate']);
     Route::post('bookedTimeShow',[TimeController::class,'bookedTimeShow']);
     Route::post('search1',[ExpertCategoriesController::class,'searchexpertroute1']);
-    Route::post('search2',[ExpertCategoriesController::class,'searchexpertroute2']);
+    Route::post('ExpertAllInfo',[ExpertCategoriesController::class,'searchexpertroute2']);
 
 });

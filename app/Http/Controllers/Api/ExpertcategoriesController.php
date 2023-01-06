@@ -10,8 +10,10 @@ use App\Models\Expertcategorie;
 use App\Models\Expert;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\MockObject\OriginalConstructorInvocationRequiredException;
 
+use function MongoDB\BSON\toRelaxedExtendedJSON;
 use function PHPUnit\Framework\isEmpty;
 
 class ExpertcategoriesController extends Controller
@@ -39,13 +41,13 @@ class ExpertcategoriesController extends Controller
             }
             else{
                 return response()->json([
-                    'massege'=>'expert not found'
+                    'massege'=>trans('message.NF')
                 ]);
             }
         }
         catch(Exception){
             return response()->json([
-                'massege'=>'expert not found'
+                'massege'=>trans('message.NF')
             ]);
         }
     }
@@ -90,10 +92,30 @@ class ExpertcategoriesController extends Controller
         ]);
         return response()->json([
             'status' => true,
-            'message' => 'added Successfully'
+            'message' => trans('message.addS')
         ]);
     }
 
+    public function update(Request $request,$id)
+    {
+        $x=Expertcategorie::find($id);
+        $validator = Validator::make($request->all(),[
+            'categories_id'=> 'required',
+            'experiance'=>'required',
+            'experiance_details'=> 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
+        $x->categories_id=$request->categories_id;
+        $x->experiance=$request->experiance;
+        $x->experiance_details=$request->experiance_details;
+        $x->save();
+        return response()->json([
+            'status' => true,
+            'message' => trans('message.updateS'),
+        ]);
+    }
     public function show(Request $request)
     {
         $categorie=Categorie::find($request->id);
@@ -117,7 +139,7 @@ class ExpertcategoriesController extends Controller
         $x->delete();
         return response()->json([
             'status' => true,
-            'message' => 'deleted Successfully'
+            'message' => trans('message.deleteS')
         ]);
     }
 

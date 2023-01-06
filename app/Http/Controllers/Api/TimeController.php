@@ -34,7 +34,7 @@ class TimeController extends Controller
                         {
                             return response()->json([
                                 'status' => false,
-                                'message' => trans('message.timeisAdd'),
+                                'message' => trans('message.timeisAddF'),
                             ], 200);
                         }
                         $startTime2 = date('H:i', strtotime(Carbon::parse($startTime2)->addHour()));
@@ -217,7 +217,7 @@ class TimeController extends Controller
                     ]);
                     return response()->json([
                         'status' => true,
-                        'message' => 'message.timeS',
+                        'message' =>  trans('message.timeS'),
                     ], 200);
                 }
             }
