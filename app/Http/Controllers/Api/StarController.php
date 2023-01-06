@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Star;
+use Ramsey\Uuid\Type\Integer;
 
 class StarController extends Controller
 {
@@ -26,11 +27,11 @@ class StarController extends Controller
     public function create($id,$num)
     { 
         $iduser=auth()->user()->id;
-       // $x=Star::all();
-        if($x=Star::where('user_id',$iduser)->first()&&$x=Star::where('expert_id',$id)->first())
+        $x=Star::where('user_id',$iduser);
+        if($x->where('expert_id',$id)->first())
         {
             return response()->json([
-                'massege'=>'the user have already '
+                'massege'=>'the user have already give star for this expert'
             ]);
         }
         else{
@@ -71,31 +72,17 @@ class StarController extends Controller
     {
         $n=0;
         $y=0;
-       // $x=Star::all();
         foreach(Star::all() as $u){
-       //while($x=Star::where('expert_id',$id)->first()){
         if($u->expert_id==$id){
             $n+=$u->numberofstars;
             $y++;
-        }
+        }}
         if($n==0)
         {
-            return response()->json([
-                'mass'=>0
-            ]);
+            return 0;
         }
         $n1=$n/$y;
-       /* return response()->json([
-            //'stars'=>$y
-            'mass'=>$u->id
-        ]);*/
-   // echo $u->expert_id;
-    }
-       return response()->json([
-            //'stars'=>$y
-            'mass'=>$n
-        ]);
-    
+        return (Integer)$n1;
     }
 
 

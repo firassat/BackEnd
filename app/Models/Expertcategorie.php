@@ -14,6 +14,12 @@ class Expertcategorie extends Model
         'experiance',
         'experiance_details'
     ];
+    protected $hidden = [
+        'id',
+        'created_at',
+        'experts_id',
+        'updated_at'
+    ];
     public function categorie()
     {
         return $this->belongsTo(Categorie::class,'categories_id');
