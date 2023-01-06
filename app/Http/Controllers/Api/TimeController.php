@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use http\Message;
 use Illuminate\Http\Request;
 use App\Models\AvailableTime;
 use App\Models\BookedTime;
@@ -33,8 +34,8 @@ class TimeController extends Controller
                         {
                             return response()->json([
                                 'status' => false,
-                                'message' => 'time is added',
-                            ], 500);
+                                'message' => trans('message.timeisAdd'),
+                            ], 200);
                         }
                         $startTime2 = date('H:i', strtotime(Carbon::parse($startTime2)->addHour()));
                         if ($startTime2 == date('H:i', strtotime('00:00')))
@@ -55,9 +56,9 @@ class TimeController extends Controller
         if ($validateUser->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
+                'message' => trans('message.ve'),
                 'errors' => $validateUser->errors()
-            ], 401);
+            ], 200);
         }
         AvailableTime::create([
             'expert_id' => $info->id,
@@ -67,7 +68,7 @@ class TimeController extends Controller
         ]);
         return response()->json([
             'status' => true,
-            'message' => 'time Created Successfully',
+            'message' => trans('message.timeS'),
         ], 200);
     }
     public function availableTimeUpdate(Request $request)
@@ -85,9 +86,9 @@ class TimeController extends Controller
             if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => trans('message.ve'),
                     'errors' => $validateUser->errors()
-                ], 401);
+                ], 200);
             }
 
             $time_old->time_from = $request->from;
@@ -97,13 +98,13 @@ class TimeController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'time Created Successfully',
+                'message' => trans('message.timeS'),
             ], 200);
         } else
             return response()->json([
                 'status' => false,
-                'message' => 'You are not allowed',
-            ], 500);
+                'message' => trans('message.NA'),
+            ], 200);
     }
     public function availableTimeDelete(Request $request)
     {
@@ -113,31 +114,28 @@ class TimeController extends Controller
         if($time_old == null){
             return response()->json([
                 'status' => false,
-                'message' => 'time not found',
-            ], 500);
+                'message' => trans('message.timeNF'),
+            ], 200);
         }
         if ($time_old->expert_id == $info->id) {
             $time_old->delete();
             return response()->json([
                 'status' => true,
-                'message' => 'time delete Successfully',
+                'message' => trans('message.timeDS'),
             ], 200);
         } else
             return response()->json([
                 'status' => false,
-                'message' => 'You are not allowed',
-            ], 500);
+                'message' => trans('message.NA'),
+            ], 200);
         }
     public function availableTimeForMe()
     {
         $info = Expert::where('users_id', auth()->user()->id)->first();
         $times = AvailableTime::where('expert_id', $info->id)->get();
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Successfully',
-            'data' => $times,
-        ], 200);
+        return $times;
+
 
     }
     public function availableTimeForExpert(Request $request)
@@ -197,9 +195,9 @@ class TimeController extends Controller
         if ($validateUser->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
+                'message' => 'message.ve',
                 'errors' => $validateUser->errors()
-            ], 401);
+            ], 200);
         }
         $newTime = TimeController::availableTimeForExpert($request)[$request->day_id - 1];
         foreach ($newTime as $i) {
@@ -219,15 +217,15 @@ class TimeController extends Controller
                     ]);
                     return response()->json([
                         'status' => true,
-                        'message' => 'time Created Successfully',
+                        'message' => 'message.timeS',
                     ], 200);
                 }
             }
         }
         return response()->json([
             'status' => false,
-            'message' => 'the time booked',
-        ], 500);
+            'message' => trans('message.timeF'),
+        ], 200);
     }
     public function bookedTimeShow()
     {

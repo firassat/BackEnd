@@ -10,7 +10,6 @@ use App\Http\Controllers\Api\FavoriteexpertController;
 use App\Http\Controllers\Api\StarController;
 use App\Http\Controllers\Api\TimeController;
 
-use App\Models\Expertcategorie;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,14 +38,13 @@ Route::post('addcategorie',[CategoriesController::class,'create']);
 Route::post('addexpertcategorie',[ExpertcategoriesController::class,'create'])->middleware('auth:sanctum');
 Route::get('deletecategorie/{id}',[ExpertcategoriesController::class,'destroy']);
 Route::post('updatecategorie/{id}',[ExpertcategoriesController::class,'update']);
-Route::post('showexpertsofcategorie',[ExpertcategoriesController::class,'show'])->middleware('auth:sanctum');
+Route::get('showexpertsofcategorie/{id}',[ExpertcategoriesController::class,'show']);
 Route::get('addexperttofavorite/{id}',[FavoriteexpertController::class,'create'])->middleware('auth:sanctum');
 Route::get('deleteexpertfromfavorite/{id}',[FavoriteexpertController::class,'destroy'])->middleware('auth:sanctum');
 Route::get('isinfavoritelist/{id}',[FavoriteexpertController::class,'show'])->middleware('auth:sanctum');
 Route::get('givestar/{id}/{num}',[StarController::class,'create'])->middleware('auth:sanctum');
-//Route::get('showstars/{id}',[StarController::class,'show']);
-Route::post('search1',[ExpertCategoriesController::class,'searchexpertroute1'])->middleware('auth:sanctum');
-Route::post('search2',[ExpertCategoriesController::class,'searchexpertroute2'])->middleware('auth:sanctum');
+Route::get('showstars/{id}',[StarController::class,'show']);
+Route::post('search',[ExpertCategoriesController::class,'index']);
 Route::post('availableTimeCreate',[TimeController::class,'availableTimeCreate'])->middleware('auth:sanctum');
 Route::post('availableTimeUpdate',[TimeController::class,'availableTimeUpdate'])->middleware('auth:sanctum');
 Route::post('availableTimeDelete',[TimeController::class,'availableTimeDelete'])->middleware('auth:sanctum');
